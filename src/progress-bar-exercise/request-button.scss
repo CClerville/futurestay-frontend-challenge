@@ -1,0 +1,27 @@
+.request-button {
+  border-radius: 32px;
+  padding: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  width: 150px;
+  height: 50px;
+  text-wrap: nowrap;
+
+  &.start {
+    border: 1px solid green;
+    color: green;
+  }
+
+  &.finish {
+    border: 1px solid red;
+    color: red;
+  }
+
+  &:hover {
+    border-width: 2px;
+    &.click {
+      border-width: 3px;
+    }
+  }
+}

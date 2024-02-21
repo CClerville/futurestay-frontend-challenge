@@ -1,0 +1,26 @@
+.progress-bar-container {
+  margin-top: 10px;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: lightgray;
+  transition: opacity 1s;
+  opacity: 0;
+
+  &.fadeIn {
+    opacity: 1;
+  }
+
+  &.fadeOut {
+    opacity: 0;
+  }
+
+  .progress-bar {
+    color: #fff;
+    height: 100%;
+    overflow: hidden;
+    text-align: center;
+    transform-origin: left;
+    background-image: linear-gradient(to right, orange, red);
+  }
+}
