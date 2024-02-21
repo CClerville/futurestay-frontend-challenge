@@ -1,10 +1,11 @@
 import Exercise from '../core/exercise';
+import Solution from './solution';
 
 const ProgressBarExercise = () => {
   return (
     <div className="progress-bar-exercise">
       <Exercise
-        solution={<Solution />}
+        solution={<Solution breakpoints={[5, 8, 12]} />}
         specsUrl="https://github.com/futurestay/frontend-challenges/issues/1"
         title="Progress Bar Exercise"
       />
@@ -13,9 +14,3 @@ const ProgressBarExercise = () => {
 };
 
 export default ProgressBarExercise;
-
-// ----------------------------------------------------------------------------------
-
-const Solution = () => {
-  return <div>Add solution here</div>;
-};
