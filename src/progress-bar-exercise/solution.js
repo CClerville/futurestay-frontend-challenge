@@ -5,10 +5,11 @@ import RequestButton from './request-button';
 
 import './solution.scss';
 
-const Solution = () => {
+const Solution = ({ breakpoints }) => {
   const [isRequesting, setIsRequesting] = useState(false);
   const [progression, setProgression] = useState(0);
   const [apiRequestCompleted, setApiRequestCompleted] = useState(false);
+  const [applyBreakPoints, setApplyBreakPoints] = useState(false);
 
   useEffect(() => {
     let timerId;
@@ -22,7 +23,7 @@ const Solution = () => {
         setTimeout(() => {
           setApiRequestCompleted(true);
           resolve();
-        }, 16000);
+        }, 20000);
       });
 
       // An interval to simulate the progression bar
@@ -32,17 +33,32 @@ const Solution = () => {
             return MAX_PROGRESSION;
           }
 
-          if (!apiRequestCompleted && prevValue === HANG_PROGRESSION) {
+          if (
+            !apiRequestCompleted &&
+            prevValue >= HANG_PROGRESSION &&
+            prevValue < MAX_PROGRESSION
+          ) {
             return prevValue;
           }
 
-          return prevValue + 1;
+          // if a breakpoint is reached, do a small increament to simulate slow progress
+          if (applyBreakPoints && breakpoints.includes(parseInt(prevValue))) {
+            return prevValue + 0.05;
+          }
+
+          return parseInt(prevValue) + 1;
         });
-      }, 200);
+      }, 100);
     }
 
     return () => clearTimeout(timerId);
-  }, [isRequesting, apiRequestCompleted, progression]);
+  }, [
+    isRequesting,
+    apiRequestCompleted,
+    progression,
+    breakpoints,
+    applyBreakPoints,
+  ]);
 
   const handleOnStartRequest = useCallback(() => {
     if (!isRequesting) {
@@ -58,6 +74,11 @@ const Solution = () => {
     setApiRequestCompleted(true);
   }, []);
 
+  //Toggle between breakpoint and non breakpoint progressbar
+  const handleOnProgressbarClick = () => {
+    setApplyBreakPoints((prevValue) => !prevValue);
+  };
+
   return (
     <div className="solution-container">
       <div className="button-group">
@@ -72,7 +93,7 @@ const Solution = () => {
           onClick={handleOnFinishRequest}
         />
       </div>
-      <ProgressBar progress={progression} />
+      <ProgressBar progress={progression} onClick={handleOnProgressbarClick} />
     </div>
   );
 };
